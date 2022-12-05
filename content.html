@@ -1,6 +1,20 @@
-<body>
-    TOKEN: 
-    <script>
-        document.write(localStorage.token);
-    </script>
-</body>
+<body></body>
+<script>
+
+                         
+        const baseURL = "https://microbloglite.herokuapp.com";
+        const endpoint = "/api/posts?limit=100&offset=0";
+        fetch(baseURL + endpoint, {
+            method: "GET",
+            headers: {
+                'accept': 'application/json',
+                'Authorization': `Bearer ${localStorage.token}`
+            }
+        }).then((response) => {
+            return response.json()
+        }).then((data)=>{
+            data.forEach(post => {
+                document.body.innerHTML += post.text;
+            });
+        })
+</script>
