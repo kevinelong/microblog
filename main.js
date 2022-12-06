@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", ()=>{
             return response.json()
         }).then((data)=>{
             console.log(data);
-            localStorage.loginData = data;
             alert("Registration Success. Please Login.")
         })
     });
