@@ -6,7 +6,8 @@ class API {
 
     post(endpoint, data, callbackFunction = () => { }) {
         fetch(endpoint, {
-            method: "POST", body: JSON.stringify(data),
+            method: "POST", 
+            body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' }
         }).then(response => response.json()).then(callbackFunction)
     }
@@ -26,11 +27,23 @@ class API {
             headers: { 'Authorization': `Bearer ${token}` }
         }).then(response => response.json()).then(callbackFunction);
     }
+
+    createPost(token, postData = {text:""}, callbackFunction) {
+        fetch(this.baseURL + "/api/posts", {
+            method: "POST", 
+            body: JSON.stringify(postData),
+            headers: { 
+                'Authorization': `Bearer ${token}`, 
+                'Content-Type': 'application/json'
+            }
+        }).then(response => response.json()).then(callbackFunction);
+    }
+
 }
 
 const api = new API();
 
-// //TESTS
+//TESTS
 // function testAPI() {
 //     let token = "";
 //     api.register({ username: "kevinelong2", password: "secret", fullName: "Kevin Long" }, data => {
@@ -38,8 +51,11 @@ const api = new API();
 //         api.login({ username: "kevinelong2", password: "secret" }, data => {
 //             console.log(data)
 //             token = data.token;
-//             api.getPosts(token, data => {
+//             api.createPost(token, {text: "NodeJS Test Post"}, data => {
 //                 console.log(data);
+//                 api.getPosts(token, data => {
+//                     console.log(data);
+//                 })
 //             })
 
 //         });
