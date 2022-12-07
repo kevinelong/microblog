@@ -1,24 +1,8 @@
 
-const baseURL = "https://microbloglite.herokuapp.com";
-
-function post(endpoint, data,  callbackFunction = ()=>{} ){
-    fetch(endpoint, { method: "POST", body: JSON.stringify(data),
-        headers: {'Content-Type': 'application/json'}
-    }).then(response => response.json()).then(callbackFunction)
-}
-
-function register(userData = {username:"",password:"",fullName:""}, callbackFunction = ()=>{} ){
-    post( baseURL + "/api/users", userData, callbackFunction);
-}
-
-function login(authData = {username:"",password:""}, callbackFunction){
-    post( baseURL + "/auth/login", authData, callbackFunction);
-}
-
 document.addEventListener("DOMContentLoaded", ()=>{
 
     document.getElementById("register").addEventListener("click", ()=>{
-        register({
+        api.register({
             username:document.getElementById("usernameR").value,
             password:document.getElementById("passwordR").value,
             fullName:document.getElementById("fullName").value,
@@ -28,7 +12,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     });
 
     document.getElementById("login").addEventListener("click", ()=>{
-        login({
+        api.login({
             username:document.getElementById("username").value,
             password:document.getElementById("password").value,
         }, data => {
