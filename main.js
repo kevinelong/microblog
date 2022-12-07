@@ -1,59 +1,41 @@
+
+const baseURL = "https://microbloglite.herokuapp.com";
+
+function post(endpoint, data,  callbackFunction = ()=>{} ){
+    fetch(endpoint, { method: "POST", body: JSON.stringify(data),
+        headers: {'Content-Type': 'application/json'}
+    }).then(response => response.json()).then(callbackFunction)
+}
+
+function register(userData = {username:"",password:"",fullName:""}, callbackFunction = ()=>{} ){
+    post( baseURL + "/api/users", userData, callbackFunction);
+}
+
+function login(authData = {username:"",password:""}, callbackFunction){
+    post( baseURL + "/auth/login", authData, callbackFunction);
+}
+
 document.addEventListener("DOMContentLoaded", ()=>{
 
-    const login = document.getElementById("login");
-    const register = document.getElementById("register");
-    const username = document.getElementById("username");
-    const password = document.getElementById("password");
-    
-    
-    register.addEventListener("click", ()=>{
-        console.log(username.value);
-        console.log(password.value);
-                         
-        const baseURL = "https://microbloglite.herokuapp.com";
-        const endpoint = "/api/users";
-        fetch(baseURL + endpoint, {
-            method: "POST",
-            body: JSON.stringify({
-                username: username.value,
-                password: password.value,
-                fullName: "Kevin Long"
-            }),
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            return response.json()
-        }).then((data)=>{
-            console.log(data);
-            alert("Registration Success. Please Login.")
-        })
+    document.getElementById("register").addEventListener("click", ()=>{
+        register({
+            username:document.getElementById("usernameR").value,
+            password:document.getElementById("passwordR").value,
+            fullName:document.getElementById("fullName").value,
+        }, data=>{
+            document.getElementById("registerResult").innerHTML = JSON.stringify(data)
+        });
     });
 
-    login.addEventListener("click", ()=>{
-        console.log(username.value);
-        console.log(password.value);
-                         
-        const baseURL = "https://microbloglite.herokuapp.com";
-        const endpoint = "/auth/login";
-        fetch(baseURL + endpoint, {
-            method: "POST",
-            body: JSON.stringify({
-                username: username.value,
-                password: password.value
-            }),
-            headers: {
-                'accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        }).then((response) => {
-            return response.json()
-        }).then((data)=>{
-            console.log(data);
-            localStorage.token = data.token;
+    document.getElementById("login").addEventListener("click", ()=>{
+        login({
+            username:document.getElementById("username").value,
+            password:document.getElementById("password").value,
+        }, data => {
+            document.getElementById("loginResult").innerHTML = JSON.stringify(data)
+            localStorage.token = data.token; // store on client browser disk for later use on the content.html page
             window.location.href = "content.html"
-        })
+        });
     });
 
 });

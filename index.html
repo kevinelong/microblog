@@ -9,11 +9,23 @@
 </head>
 <body>
     <h1> Welcome to my recipe blog! Please Log in:</h1>
-    <div>
+
+    <fieldset>
+        <legend>Register</legend>
+        <input id="fullName" placeholder="Full Name">
+        <input id="usernameR" placeholder="User Name">
+        <input id="passwordR" type="password" placeholder="Password">
+        <button id="register">Register</button>
+        <div id="registerResult"></div>
+    </fieldset>
+
+    <fieldset>
+        <legend>Login</legend>
         <input id="username" placeholder="User Name">
         <input id="password" type="password" placeholder="Password">
         <button id="login">Login</button>
-        <button id="register">Register</button>
-    </div>
+        <div id="loginResult"></div>
+    </fieldset>
+
 </body>
 </html>
